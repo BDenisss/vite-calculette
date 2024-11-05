@@ -1,12 +1,9 @@
 name: CI/CD Pipeline
 
-on:
-  push:
-    tags:
-      - 'v*.*.*'  # Déclenchement uniquement pour les tags versionnés
+on: [push]
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,15 +18,42 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Run lint
+        run: npm run lint
+
       - name: Run tests
         run: npm run test
 
       - name: Build project
         run: npm run build
 
-      - name: Deploy to Vercel
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          npm install -g vercel
-          vercel deploy --prod --token=$VERCEL_TOKEN
+
+  Deploy-development:
+        runs-on: ubuntu-latest
+        needs: build
+        steps:
+        #INSTALL NODEJS & NPM ON VERCEL
+        - uses: actions/checkout@v2
+        - name: Install Node.js
+          uses: actions/setup-node@v3
+
+        - name: Install npm
+          uses: actions/setup-node@v3
+          with:
+            node-version: '20'
+            registry-url: 'https://registry.npmjs.org/'
+        #INSTALL DEPENDENCIES
+        - name: Install dependencies
+          run: npm install  
+        #INSTALL VERCEL CLI IN SERVER.
+        - name: Install Vercel CLI
+          run: npm install --global vercel@latest
+        #SET ENVIRONMENT IN VERCEL. 
+        #CREATE ENVIRONMENT IN VERCEL & BUILD IN VERCEL.
+        # GITHUB.COM > SETTINGS > SECRETS AND VARIABLES > ACTIONS > ENVRIONEMENT SECRETS.
+        - name: Pull Vercel Environment Information
+          run: vercel pull --yes --environment=development --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Build Project Artifacts
+          run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        - name: Deploy Project Artifacts to Vercel  
+          run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
