@@ -38,3 +38,7 @@ Pour cloner et lancer le projet en local, suivez les étapes ci-dessous :
 ```bash
 git clone https://github.com/BDenisss/vite-calculette.git
 cd calculatrice
+npm i
+npm run dev
+npm run test
+npm run build
