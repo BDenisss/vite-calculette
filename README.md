@@ -36,5 +36,5 @@ Pour cloner et lancer le projet en local, suivez les étapes ci-dessous :
 ### 1. Cloner le Dépôt
 
 ```bash
-git clone https://github.com/TON_DEPOT/calculatrice.git
+git clone https://github.com/BDenisss/vite-calculette.git
 cd calculatrice
