@@ -2,7 +2,7 @@
 
 Ce projet est une calculatrice web développée avec Vite et Vanilla JS, qui permet d'effectuer des opérations de base (addition, soustraction, multiplication, division). Le déploiement est automatisé avec GitHub Actions et Vercel, et respecte un workflow CI/CD pour tester et déployer uniquement les versions taguées.
 
-## Table des Membres du Groupe
+## Table des Menbres du Groupe (solo)
 
 | NOM       | Prénom |
 |-----------|--------|
